@@ -1,0 +1,63 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    &>div:not(.form-wrapper) {
+        padding: 10px;
+        flex-grow: 1;
+    }
+}
+
+.index-form {
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+
+    .index-container {
+        padding: 10px;
+        div {
+            display: flex;
+            justify-content: space-between;
+            text-align: left;
+            app-hex-form-control {
+                width: 30px;
+                display: inline-block;
+                margin-left: 20px;
+            }
+        }
+
+        
+
+    }
+}
+
+.form-actions {
+    display: flex;
+    width: 600px;
+    flex-direction: column;
+    
+    .reg-actions,.stack-actions,.mem-actions {
+        border: solid 1px black;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+        .selections,.buttons {
+            display: inline;
+        }
+        .selections {
+            justify-content: space-between;
+        }
+        .buttons {
+            justify-content: space-around;
+        }
+    }
+}
+
+button {
+    margin: 10px;
+}
+
+h3 {
+    margin-bottom: 10px;
+}
