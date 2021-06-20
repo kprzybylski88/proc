@@ -7,15 +7,23 @@
     <button (click)="reset()">reset</button>
     <div>
       AX: <app-hex-form-control [formControlName]="fieldNames.ax"></app-hex-form-control>
+      <span>AH: {{ form.controls.ax.value.slice(0, 2) }}</span>
+      <span>AL: {{ form.controls.ax.value.slice(2, 4) }}</span>
     </div>
     <div>
       BX: <app-hex-form-control [formControlName]="fieldNames.bx"></app-hex-form-control>
+      <span>BH: {{ form.controls.bx.value.slice(0, 2) }}</span>
+      <span>BL: {{ form.controls.bx.value.slice(2, 4) }}</span>
     </div>
     <div>
       CX: <app-hex-form-control [formControlName]="fieldNames.cx"></app-hex-form-control>
+      <span>CH: {{ form.controls.cx.value.slice(0, 2) }}</span>
+      <span>CL: {{ form.controls.cx.value.slice(2, 4) }}</span>
     </div>
     <div>
       DX: <app-hex-form-control [formControlName]="fieldNames.dx"></app-hex-form-control>
+      <span>DH: {{ form.controls.dx.value.slice(0, 2) }}</span>
+      <span>DL: {{ form.controls.dx.value.slice(2, 4) }}</span>
     </div>
   </div>
   <div class="index-container">
@@ -24,7 +32,7 @@
     
     <div>
       SP: <app-hex-form-control [formControlName]="fieldNames.sp"></app-hex-form-control>
-    </div>
+    </div> 
     <div>
       DI: <app-hex-form-control [formControlName]="fieldNames.di"></app-hex-form-control>
     </div>
@@ -106,7 +114,7 @@
           <option *ngFor="let opt of baseRegNamesArr" [value]="opt">{{ opt?.toUpperCase() }}</option>
         </select>
       </div>
-      <div>OBLICZONY ADRES: {{memAddr}}</div>
+      <div [ngClass]="{'mem-too-high': memTooHigh}">OBLICZONY ADRES: {{memAddr.toUpperCase()}}</div>
     </div>
     <div class="buttons">
       <button (click)="movMem(true)">MOV REG -> MEM</button>
@@ -119,7 +127,7 @@
 
 </div>
   <div>
-    <button (click)="getMem()">Pokaż 64 bajty pamięci zaczynając od: </button> <span style="max-width: 100px; display: inline-block;">
+    <button (click)="getMem()">Pokaż 64 adresy pamięci zaczynając od: </button> <span style="max-width: 100px; display: inline-block;">
       <app-hex-form-control [formControl]="memControl"></app-hex-form-control>
     </span>
     <h3>

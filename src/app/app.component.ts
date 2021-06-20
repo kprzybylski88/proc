@@ -65,6 +65,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public regToOpts: Array<keyof RegNames> = ['bx', 'cx', 'dx'];
 
+  public memTooHigh = false;
+
   ngOnInit() {
 
     this._subManager.add(this.formAction.controls.regFrom.valueChanges.subscribe(v => {
@@ -165,7 +167,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.mem = this.memory.getMemSlice(this.memControl.value);
     } else {
       const value = this.memory.read(addr);
-      this.form.controls[valueReg].setValue(value);
+      if (value) this.form.controls[valueReg].setValue(value);
     }
   }
 
@@ -176,6 +178,7 @@ export class AppComponent implements OnInit, OnDestroy {
     const valueReg = this.formAction.controls.memReg.value;
     const regValue = this.form.controls[valueReg].value;
     const memValue = this.memory.read(addr);
+    if (!memValue) return;
     this.form.controls[valueReg].setValue(memValue);
     this.memory.write(regValue, addr);
     this.mem = this.memory.getMemSlice(this.memControl.value);
@@ -203,6 +206,8 @@ export class AppComponent implements OnInit, OnDestroy {
         break;
       }
     }
+
+    this.memTooHigh = addr10 >= this.memory.maxMem;
     return addr10.toString(16);
   }
 
@@ -220,7 +225,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public random() {
     (Object.keys(this.form.controls) as Array<keyof ProcModel>).filter(c => c !== 'sp').forEach(ctn => {
-      const rnd = Math.floor(Math.random() * 256).toString(16).toUpperCase();
+      const rnd = Math.floor(Math.random() * this.memory.maxMem).toString(16).toUpperCase();
       this.form.controls[ctn].setValue(rnd);
     })
   }

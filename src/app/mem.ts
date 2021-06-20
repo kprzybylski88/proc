@@ -2,7 +2,7 @@ import { addZeros } from './utils/string.utils';
 
 export class Memory {
 
-    private readonly maxMem = 65536;
+    public readonly maxMem = 65536;
 
     constructor() {
         this.clear();
@@ -23,15 +23,20 @@ export class Memory {
 
     public write(value: string, address: string) {
         
-        if (!value || !this._memory[address.toUpperCase()]) return;
         if (parseInt(address, 16) > this.maxMem || parseInt(address, 16) < 0) {
             alert('adres poza pamięcią!');
+            return;
         }
+        if (!value || !this._memory[address.toUpperCase()]) return;
         this._memory[address.toUpperCase()] = value;
     }
 
-    public read(address: string): string {
-        return this._memory[address];
+    public read(address: string): string | null {
+        if (parseInt(address, 16) > this.maxMem) {
+            alert('adres poza pamięcią');
+            return null;
+        }
+        return this._memory[address.toUpperCase()];
     }
 
  
